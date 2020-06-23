@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import AddForm from './components/AddForm';
+import ClocksList from './components/ClocksList';
+import { nanoid } from 'nanoid';
 
-function App() {
+export default function App() {
+  const [clocks, setClocks] = useState([
+    {id: nanoid(), label: 'Moscow', timezone: '3'}
+  ]);
+
+  const [form, setForm] = useState({
+    label: '',
+    timezone: ''
+  });
+
+  const handleChange = ({target}) => {
+    const name = target.name;
+    const value = target.value;
+    setForm(prevForm => ({...prevForm, [name]: value}));
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setClocks([ ...clocks, {id: nanoid(), label: form.label, timezone: form.timezone}]);
+
+    setForm({
+      label: '',
+      timezone: ''
+    })
+  }
+
+  const handleRemove = (id) => {
+    setClocks(prevClocks => prevClocks.filter(o => o.id !== id));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AddForm handleChange={handleChange} handleSubmit={handleSubmit} form={form}/>
+      <ClocksList clocks={clocks} handleRemove={handleRemove} />
+    </>
   );
 }
-
-export default App;
