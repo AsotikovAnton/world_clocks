@@ -11,13 +11,10 @@ export default function Clock({clock, handleRemove}) {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      setTime(prevTime => ({
-        // hour: prevTime.hour + (6 / 60 / 60),
-        // minute: prevTime.minute + (6 / 60),
-        // second: prevTime.second + 6
+      setTime(() => ({
         hour: 360 / 12 * moment().utcOffset(+clock.timezone).format('hh') + moment().format('mm') / 2,
         minute: 360 / 60 * moment().format('mm'),
-        second: 6 * moment().format('ss') + 6
+        second: 6 * moment().format('ss')
       }));
     }, 1000);
 

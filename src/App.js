@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import { nanoid } from 'nanoid';
 import AddForm from './components/AddForm';
 import ClocksList from './components/ClocksList';
-import { nanoid } from 'nanoid';
+
+import './App.css';
 
 export default function App() {
   const [clocks, setClocks] = useState([
@@ -14,9 +15,7 @@ export default function App() {
     timezone: ''
   });
 
-  const handleChange = ({target}) => {
-    const name = target.name;
-    const value = target.value;
+  const handleChange = ({target: {name, value}}) => {
     setForm(prevForm => ({...prevForm, [name]: value}));
   }
 

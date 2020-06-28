@@ -1,6 +1,7 @@
 import React from 'react';
-import '../App.css';
 import Clock from './Clock';
+
+import '../App.css';
 
 export default function ClocksList({clocks, handleRemove}) {
   return (
